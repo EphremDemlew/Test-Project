@@ -9,7 +9,7 @@ export const fetchCharactersGql = graphql(/* GraphQL */ `
       species
       status
       image
-      episode {  # Make sure episode is part of the query
+      episode {
         id
         name
       }
