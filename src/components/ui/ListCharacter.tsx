@@ -93,7 +93,7 @@ const ListCharacter = () => {
                             {localCharacters.some((char) => char.id === character.id) && (
                                 <button
                                     onClick={() => handleDeleteLocalStorageImage(character.id as string)}
-                                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg shadow-md transition-all duration-200 flex items-center gap-2"
+                                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg shadow-md transition-all duration-200 flex items-center gap-2 cursor-pointer"
                                 >
                                     <FaRegTrashAlt className="w-4 h-4" />
                                 </button>
