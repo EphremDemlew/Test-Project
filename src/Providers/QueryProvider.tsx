@@ -8,7 +8,7 @@ interface Props {
 }
 
 const QueryProvider = ({ children }: Props) => {
-    // Initialize QueryClient inside the component
+
     const [queryClient] = useState(() => new QueryClient());
 
     return (

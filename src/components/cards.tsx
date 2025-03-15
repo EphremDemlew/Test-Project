@@ -1,23 +1,32 @@
-"use client"
-import Image from "next/image"
+import Image from "next/image";
 
+type CardProps = {
+    character: {
+        id: string;
+        name: string;
+        species: string;
+        image: string;
+    };
+};
 
-const Cards = () => {
+const Cards = ({ character }: CardProps) => {
     return (
-        <>
-            <div className="flex flex-col border-1 border-gray-300 shadow-sm hover:shadow-2xl rounded justify-between min-w-44 h-auto cursor-pointer absolute">
-                <span className="absolute right-2 top-2 bg-green-500 rounded-full animate-ping  h-2 w-2 z-50" />
-                <Image src={"https://rickandmortyapi.com/api/character/avatar/1.jpeg"} width={350} height={350} alt="profilePic.jpg" />
-                <div className="flex justify-between items-center px-4 py-5">
-                    <div className="flex flex-col justify-start font-semibold">
-                        <h1 className="text-black">Rick Sanchez</h1>
-                        <h2 className="text-gray-700 text-sm">Human</h2>
-                    </div>
-                </div>
-
+        <div className="relative bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 cursor-pointer">
+            <div className="relative overflow-hidden rounded-t-lg">
+                <Image
+                    src={character.image || "/default-image.png"}
+                    alt={character.name}
+                    width={300}
+                    height={300}
+                    className="object-cover w-full h-48 bg-contain"
+                />
             </div>
-        </>
-    )
-}
+            <div className="p-4">
+                <h2 className="text-xl font-semibold text-gray-800">{character.name}</h2>
+                <p className="text-sm text-gray-600">{character.species}</p>
+            </div>
+        </div>
+    );
+};
 
-export default Cards
+export default Cards;

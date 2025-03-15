@@ -1,15 +1,20 @@
-// useRequest.js
-import { useQuery } from "react-query";
-import { GraphQLClient } from "graphql-request";
-import {fetchCharactersGql} from "@/graphql"
-const API_URL = process.env.NEXT_GRAPHQL_URL as string;
+import { useQuery } from "@tanstack/react-query";
+import { fetchCharactersGql } from "@/graphql";
+import request from "graphql-request";
+import {  GetCharactersQuery } from "@/gql/graphql";
 
-const graphQLClient = new GraphQLClient(API_URL);
+const API_URL = process.env.NEXT_PUBLIC_GRAPHQL_URL as string;
 
-export function useGetCharacters() {
-  return useQuery("get-characters", async () => {
-    const res = await graphQLClient.request(fetchCharactersGql);
-    return res;
+export const useGetData = () => {
+  const { data, isLoading, isError } = useQuery<GetCharactersQuery>({
+    queryKey: ["char"],
+    queryFn: async (): Promise<GetCharactersQuery> => {
+      // Fetch the data using the GraphQL request
+      const response = await request<GetCharactersQuery>(API_URL, fetchCharactersGql);
+
+      return response;
+    },
   });
-}
 
+  return { data, isLoading, isError };
+};

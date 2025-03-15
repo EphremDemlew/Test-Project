@@ -1,40 +1,115 @@
-"use client"
+"use client";
 
-// import { ChevronLeft } from "lucide"
-import { useCallback } from "react"
-
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 
 const CreateCharacter = () => {
-    const handleSubmit = useCallback(() => {
-        console.log("🚀 ~ handleSubmit ~ e",)
+    const [name, setName] = useState("");
+    const [species, setSpecies] = useState("");
+    const [status, setStatus] = useState("");
+    const [image, setImage] = useState("");
+    const router = useRouter();
 
-    }, [])
+    const handleSubmit = useCallback(
+        async (e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+
+            const newCharacter = { name, species, status, image };
+
+            try {
+                // Example API call (replace with real API call)
+                // await api.addCharacter(newCharacter);
+
+                // Save the new character in localStorage
+                const storedCharacters = JSON.parse(localStorage.getItem("characters") || "[]");
+                storedCharacters.push(newCharacter);
+                localStorage.setItem("characters", JSON.stringify(storedCharacters));
+
+                // Redirect to the home page after adding the character
+                router.push("/");
+            } catch (error) {
+                console.error("Error adding character:", error);
+                alert("Failed to add character.");
+            }
+        },
+        [name, species, status, image, router]
+    );
+
     return (
-
-
-        <div className="flex flex-col gap-10 justify-start items-center p-20 relative">
-
-            <div className="absolute left-10 top 10" onClick={() => window.history.back()}>
-                {/* <ChevronLeft  /> */}
-                <button className="bg-black px-5 py-3 text-white rounded hover:bg-gray-700 cursor-pointer">Back</button>
-
+        <div className="flex flex-col gap-10 justify-start items-center p-10 md:p-20 relative bg-gray-50 min-h-screen">
+            <div className="absolute left-10 top-10">
+                <button
+                    onClick={() => router.back()}
+                    className="bg-black px-5 py-3 text-white rounded hover:bg-gray-700 transition duration-300"
+                >
+                    Back
+                </button>
             </div>
-            <h1 className="text-xl font-2xl">
-                Add Character Infos
-            </h1>
 
-            <form className="flex flex-col gap-5 ">
-                <input type="text" placeholder="Name" className="px-5 py-3 rounded border-1 border-gray-800 w-80" />
-                <input type="text" placeholder="Species" className="px-5 py-3 rounded border-1 border-gray-800 w-80" />
-                <input type="text" placeholder="Status" className="px-5 py-3 rounded border-1 border-gray-800 w-80" />
-                <input type="text" placeholder="Image" className="px-5 py-3 rounded border-1 border-gray-800 w-80" />
+            <h1 className="text-3xl font-semibold text-gray-900">Add Character Information</h1>
 
-                <button type="submit" onClick={() => handleSubmit} className="bg-black px-5 py-3 text-white rounded hover:bg-gray-700 cursor-pointer">Add</button>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full max-w-md">
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="name" className="text-gray-700">Name</label>
+                    <input
+                        id="name"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter character name"
+                        className="px-5 py-3 rounded-lg border border-gray-300 w-full"
+                        required
+                    />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="species" className="text-gray-700">Species</label>
+                    <input
+                        id="species"
+                        type="text"
+                        value={species}
+                        onChange={(e) => setSpecies(e.target.value)}
+                        placeholder="Enter species"
+                        className="px-5 py-3 rounded-lg border border-gray-300 w-full"
+                        required
+                    />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="status" className="text-gray-700">Status</label>
+                    <input
+                        id="status"
+                        type="text"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                        placeholder="Enter status"
+                        className="px-5 py-3 rounded-lg border border-gray-300 w-full"
+                        required
+                    />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="image" className="text-gray-700">Image URL</label>
+                    <input
+                        id="image"
+                        type="text"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        placeholder="Enter image URL"
+                        className="px-5 py-3 rounded-lg border border-gray-300 w-full"
+                        required
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="bg-black px-5 py-3 text-white rounded-lg hover:bg-gray-700 transition duration-300 mt-5"
+                >
+                    Add Character
+                </button>
             </form>
-
         </div>
+    );
+};
 
-    )
-}
-
-export default CreateCharacter
+export default CreateCharacter;
