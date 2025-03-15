@@ -4,7 +4,7 @@ const Skeleton = () => {
             {Array.from({ length: 8 }).map((_, index) => (
                 <div
                     key={index}
-                    className="relative bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden w-full max-w-[300px] h-[400px] animate-pulse"
+                    className="relative bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden w-full max-w-[300px] h-[300px] animate-pulse"
                 >
                     {/* Image Skeleton */}
                     <div className="relative h-3/4 bg-gray-700"></div>
