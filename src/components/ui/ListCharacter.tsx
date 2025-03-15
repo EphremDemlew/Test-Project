@@ -22,28 +22,23 @@ const ListCharacter = () => {
 
     const { ref, inView } = useInView();
 
-    // Define the type for localCharacters as an array of Character
     const [localCharacters, setLocalCharacters] = useState<Character[]>([]);
 
     useEffect(() => {
-        // Retrieve characters from localStorage and parse them as Character[]
         const storedCharacters = JSON.parse(localStorage.getItem("characters") || "[]") as Character[];
         setLocalCharacters(storedCharacters);
     }, []);
 
-    // Trigger infinite scroll fetch when element comes into view
     useEffect(() => {
         if (inView && hasNextPage && !isFetchingNextPage) {
             fetchNextPage();
         }
     }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-    // Flatten all pages' results
     const apiCharacters = data?.pages.flatMap(page =>
         page.characters?.results || []
     ) || [];
 
-    // Combine local and API characters
     const characters = [...localCharacters, ...apiCharacters];
 
     const handleDeleteLocalStorageImage = (id: string) => {
@@ -54,8 +49,8 @@ const ListCharacter = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col justify-start items-center py-20 gap-10 relative min-h-screen bg-gray-50 p-10">
-                <h1 className="text-4xl font-bold text-gray-900">Characters</h1>
+            <div className="flex flex-col justify-start items-center py-20 gap-10 relative min-h-screen bg-gray-900 p-10">
+                <h1 className="text-4xl font-bold text-white">Characters</h1>
                 <Skeleton />
             </div>
         );
@@ -75,7 +70,6 @@ const ListCharacter = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 w-full px-4 pb-44 place-items-center place-content-center">
                 {characters.map((character) => {
-                    // Skip rendering if character is null or undefined
                     if (!character) return null;
 
                     return (
@@ -111,7 +105,7 @@ const ListCharacter = () => {
                     className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 disabled:bg-gray-400 transition-all duration-200 cursor-pointer font-medium"
                 >
                     {isFetchingNextPage
-                        ? (<Skeleton />)
+                        ? 'Loading more...'
                         : hasNextPage
                             ? 'Load More'
                             : 'No more characters'}
