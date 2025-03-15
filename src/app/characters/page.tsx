@@ -7,6 +7,7 @@ import { Character } from "@/gql/graphql";
 
 const Create = () => {
     const { data, isLoading, isError } = useGetData();
+    console.log("🚀 ~ Create ~ data:", data)
     const [localCharacters, setLocalCharacters] = useState<any[]>([]);
 
     useEffect(() => {
@@ -68,12 +69,15 @@ const Create = () => {
                     <div key={character?.id} className="relative group">
                         <Cards
                             character={{
-                                id: character?.id ?? "",
-                                name: character?.name ?? "Unknown",
-                                species: character?.species ?? "Unknown",
-                                image: character?.image ?? "",
+                                id: character?.id || "",
+                                name: character?.name || "Unknown",
+                                species: character?.species || "Unknown",
+                                image: character?.image || "",
+                                // Ensure status is either "unknown", "active", or "dead"
+                                status: (character?.status as "unknown" | "Alive" | "Dead") || "unknown",
                             }}
                         />
+
 
                         {localCharacters.some((char: Character) => char.id === character.id) && (
                             <button

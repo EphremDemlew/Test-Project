@@ -1,8 +1,8 @@
 import { graphql } from "@/gql";
 
 export const fetchCharactersGql = graphql(/* GraphQL */ `
- query getCharacters{
-  characters {
+ query getCharacters($page : Int){
+  characters(page: $page) {
     results {
       id
       name
