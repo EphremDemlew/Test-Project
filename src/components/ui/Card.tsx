@@ -26,6 +26,7 @@ const Cards = ({ character }: CardProps) => {
                 alt={character.name}
                 width={300}
                 height={300}
+                unoptimized
                 className="object-cover w-full h-full group-hover:brightness-55 transition-all duration-300"
             />
             <div className="absolute inset-0 flex flex-col justify-end p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
